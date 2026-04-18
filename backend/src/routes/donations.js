@@ -39,7 +39,7 @@ router.post("/", authRequired, requireRole("donor"), async (req, res, next) => {
     const donation = await client.query(
       `INSERT INTO donations (need_id, donor_id, amount, status, method)
        VALUES ($1, $2, $3, 'completed', $4) RETURNING *`,
-      [need_id, donorId, acceptedAmount, method || "card"]
+      [need_id, donorId, acceptedAmount, method || "easypaisa"]
     );
 
     const newFunded = need.amount_funded + acceptedAmount;

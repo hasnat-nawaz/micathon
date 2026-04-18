@@ -4,9 +4,9 @@ import api from "../../api/client.js";
 import { needCategoryTagClass } from "../../utils/needTagClass.js";
 
 const PAY_METHODS = [
-  { id: "card", label: "Card", icon: "💳" },
-  { id: "easypaisa", label: "EasyPaisa", icon: "📱" },
-  { id: "jazzcash", label: "JazzCash", icon: "💸" },
+  { id: "easypaisa", label: "EasyPaisa", logoSrc: "/payments/easypaisa.png" },
+  { id: "jazzcash", label: "JazzCash", logoSrc: "/payments/jazzcash.png" },
+  { id: "card", label: "Mastercard", logoSrc: "/payments/mastercard.png" },
 ];
 
 export default function NeedDetail() {
@@ -15,7 +15,7 @@ export default function NeedDetail() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [amount, setAmount] = useState("");
-  const [method, setMethod] = useState("card");
+  const [method, setMethod] = useState("easypaisa");
   const [busy, setBusy] = useState(false);
   const [feedback, setFeedback] = useState(null);
   const [celebration, setCelebration] = useState(null);
@@ -181,7 +181,7 @@ export default function NeedDetail() {
                 </div>
                 <div className="form-row">
                   <label>Payment method</label>
-                  <div className="pay-options">
+                  <div className="pay-options pay-options--inline-three">
                     {PAY_METHODS.map((p) => (
                       <button
                         type="button"
@@ -189,14 +189,11 @@ export default function NeedDetail() {
                         className={"pay-option" + (method === p.id ? " selected" : "")}
                         onClick={() => setMethod(p.id)}
                       >
-                        <span className="pay-icon">{p.icon}</span>
-                        {p.label}
+                        <img className="pay-option__logo" src={p.logoSrc} alt="" decoding="async" aria-hidden />
+                        <span className="pay-option__label">{p.label}</span>
                       </button>
                     ))}
                   </div>
-                </div>
-                <div className="banner-info" style={{ fontSize: 12 }}>
-                  Demo mode — no real charge. Funds are recorded against the need.
                 </div>
                 <div style={{ display: "flex", gap: 10 }}>
                   <button type="button" className="btn btn-secondary btn-block" onClick={() => setShowModal(false)}>
@@ -225,7 +222,6 @@ export default function NeedDetail() {
                 Donation successful
               </p>
               <p className="donation-success-amount">Rs. {celebration.amount.toLocaleString()}</p>
-              <p className="donation-success-copy">Your gift is recorded. Thank you for giving with Yaqeen.</p>
             </div>
           </div>
         </div>

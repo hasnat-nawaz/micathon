@@ -42,17 +42,24 @@ export default function Home() {
   const [sliderVal, setSliderVal] = useState(2000);
 
   useEffect(() => {
-    api.get("/needs").then(({ data }) => {
-      setNeeds(data.slice(0, 6));
-      const raised = data.reduce((s, n) => s + (n.amount_funded || 0), 0);
-      setStats({ raised, donors: 0, needs: data.length });
-    }).catch(() => {});
-    api.get("/leaderboard").then(({ data }) => {
-      const donors = Array.isArray(data)
-        ? data.filter((d) => Number(d?.total_donated ?? 0) > 0).length || data.length
-        : 0;
-      setStats((s) => ({ ...s, donors }));
-    }).catch(() => {});
+    api
+      .get("/needs")
+      .then(({ data }) => {
+        setNeeds(data.slice(0, 6));
+        const raised = data.reduce((s, n) => s + (n.amount_funded || 0), 0);
+        // Merge — do not set donors: 0 here; if this resolves after /leaderboard it would wipe the real count.
+        setStats((s) => ({ ...s, raised, needs: data.length }));
+      })
+      .catch(() => {});
+    api
+      .get("/leaderboard")
+      .then(({ data }) => {
+        const donors = Array.isArray(data)
+          ? data.filter((d) => Number(d?.total_donated ?? 0) > 0).length
+          : 0;
+        setStats((s) => ({ ...s, donors }));
+      })
+      .catch(() => {});
   }, []);
 
   const ctaLink = user

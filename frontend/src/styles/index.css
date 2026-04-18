@@ -942,7 +942,18 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   margin: 0;
   justify-content: center;
   align-items: center;
-  gap: 22px 52px;
+  /* row-gap when stacked (mobile); horizontal space on desktop uses streak margin — more reliable than flex column-gap with wrap + center */
+  gap: 22px;
+}
+
+@media (min-width: 769px) {
+  .dashboard-hero--donor .dashboard-hero__row {
+    flex-wrap: nowrap;
+    column-gap: 0;
+  }
+  .dashboard-hero--donor .dashboard-streak-glass {
+    margin-inline-start: clamp(56px, 11vw, 144px);
+  }
 }
 
 .dashboard-hero--donor .dashboard-hero__left {
@@ -1406,6 +1417,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     width: 100%;
     max-width: 320px;
     min-width: 0;
+  }
+  .dashboard-hero--donor .dashboard-streak-glass {
+    margin-inline-start: 0;
   }
   .dashboard-hero__row {
     flex-direction: column;
@@ -2234,7 +2248,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   letter-spacing: 0.16em;
   text-transform: uppercase;
   opacity: 0.92;
-  margin-bottom: 8px;
+  margin-bottom: 14px;
 }
 .donation-success-amount {
   position: relative;
@@ -2243,15 +2257,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   line-height: 1.1;
   font-family: "Plus Jakarta Sans", sans-serif;
   text-shadow: 0 6px 28px rgba(0, 0, 0, 0.25);
-  margin-bottom: 12px;
-}
-.donation-success-copy {
-  position: relative;
-  font-size: 15px;
-  line-height: 1.55;
-  opacity: 0.92;
-  max-width: 32ch;
-  margin: 0 auto;
+  margin: 0;
 }
 @keyframes donationSuccessFade {
   from { opacity: 0; }
@@ -2274,15 +2280,38 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ─── Payment ─── */
 .pay-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 8px 0 4px; }
+/* Donation modal: always keep three methods on one row */
+.pay-options--inline-three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 .pay-option {
   padding: 14px 8px; border-radius: var(--radius-sm); border: 2px solid var(--gray-200);
   background: white; font-size: 13px; font-weight: 600; color: var(--gray-700);
   text-align: center; transition: all .15s;
   box-shadow: 0 2px 8px rgba(21, 27, 31, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 100px;
 }
 .pay-option:hover { border-color: var(--primary-light); }
 .pay-option.selected { border-color: var(--primary); background: var(--primary-50); color: var(--primary-dark); }
 .pay-icon { display: block; font-size: 22px; margin-bottom: 4px; }
+.pay-option__logo {
+  display: block;
+  width: min(100px, 88%);
+  height: 48px;
+  object-fit: contain;
+  object-position: center;
+  margin: 0 auto;
+}
+.pay-option__label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+}
 
 /* ─── Empty ─── */
 .empty { text-align: center; padding: 60px 20px; color: var(--gray-500); }
@@ -2684,7 +2713,25 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .nav-links { gap: 0; }
   .nav-link { padding: 6px 10px; font-size: 13px; }
   .auth-card { padding: 24px; }
-  .pay-options { grid-template-columns: 1fr; }
+  .pay-options:not(.pay-options--inline-three) {
+    grid-template-columns: 1fr;
+  }
+  .pay-options--inline-three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .pay-options--inline-three .pay-option {
+    min-height: 92px;
+    padding: 10px 6px;
+  }
+  .pay-options--inline-three .pay-option__logo {
+    height: 40px;
+    width: min(100%, 76px);
+  }
+  .pay-options--inline-three .pay-option__label {
+    font-size: 11px;
+    line-height: 1.2;
+  }
   .container { padding: 0 16px; }
   .features-grid { grid-template-columns: 1fr; }
   .features-header h2 { font-size: 28px; }
