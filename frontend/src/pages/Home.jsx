@@ -22,13 +22,17 @@ function getImpact(amount) {
   return IMPACT_MAP.find((m) => amount <= m.max)?.text || IMPACT_MAP[IMPACT_MAP.length - 1].text;
 }
 
-const PARTNERS = [
-  { name: "Edhi Foundation", icon: "🏥" },
-  { name: "LUMS", icon: "🎓" },
-  { name: "Akhuwat", icon: "🤝" },
-  { name: "TCF", icon: "📚" },
-  { name: "Shaukat Khanum", icon: "💚" },
-  { name: "SOS Villages", icon: "🏠" },
+/** Static logos in /public/partners — infinite belt scroll on home */
+const PARTNER_LOGOS = [
+  "/partners/logo-leaf.png",
+  "/partners/logo-humanitarian.png",
+  "/partners/logo-hands.png",
+  "/partners/logo-growth.png",
+  "/partners/edhi.png",
+  "/partners/logo-emblem.png",
+  "/partners/indus-hospital.png",
+  "/partners/alkhidmat.png",
+  "/partners/utility-stores.png",
 ];
 
 export default function Home() {
@@ -44,7 +48,10 @@ export default function Home() {
       setStats({ raised, donors: 0, needs: data.length });
     }).catch(() => {});
     api.get("/leaderboard").then(({ data }) => {
-      setStats((s) => ({ ...s, donors: data.filter((d) => d.total_donated > 0).length }));
+      const donors = Array.isArray(data)
+        ? data.filter((d) => Number(d?.total_donated ?? 0) > 0).length || data.length
+        : 0;
+      setStats((s) => ({ ...s, donors }));
     }).catch(() => {});
   }, []);
 
@@ -82,7 +89,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* ─── Interactive Slider ─── */}
             <div className="impact-slider-card slide-up">
               <h3>Slide to see your impact</h3>
               <p className="slider-label">Discover what your donation can do</p>
@@ -98,7 +104,7 @@ export default function Home() {
                 value={sliderVal}
                 onChange={(e) => setSliderVal(Number(e.target.value))}
               />
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: -12, marginBottom: 16 }}>
+              <div className="impact-slider-scale">
                 <span>PKR 100</span>
                 <span>PKR 25,000</span>
               </div>
@@ -111,25 +117,42 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Trust Bar ─── */}
-      <section className="trust-bar">
+      {/* ─── Partner logos (infinite scroll belt) ─── */}
+      <section className="trust-bar" aria-labelledby="trust-bar-heading">
         <div className="container">
-          <p className="trust-bar-label">Trusted partners & verified institutions</p>
-          <ul className="trust-partners" role="list">
-            {PARTNERS.map((p) => (
-              <li className="trust-partner" key={p.name}>
-                <span className="trust-partner__mark" aria-hidden="true">
-                  {p.icon}
-                </span>
-                <span className="trust-partner__name">{p.name}</span>
-              </li>
-            ))}
-          </ul>
+          <p id="trust-bar-heading" className="trust-bar-label">
+            Trusted partners & verified institutions
+          </p>
         </div>
+        <div
+          className="trust-marquee"
+          role="region"
+          aria-label="Scrolling partner and institution logos"
+        >
+          <div className="trust-marquee__viewport">
+            <div className="trust-marquee__track">
+              {[...PARTNER_LOGOS, ...PARTNER_LOGOS].map((src, i) => (
+                <div className="trust-marquee__item" key={`${src}-${i}`}>
+                  <img
+                    className="trust-marquee__logo"
+                    src={src}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    draggable={false}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <span className="visually-hidden">
+          Partner logos include Edhi Foundation, Indus Hospital, Alkhidmat, Utility Stores, and others.
+        </span>
       </section>
 
-      {/* ─── Stats ─── */}
-      <section className="section">
+      {/* ─── Stats (dark band + glass cards) ─── */}
+      <section className="home-metrics-band" aria-label="Platform metrics">
         <div className="container">
           <div className="stats-grid stats-grid--home" style={{ marginBottom: 56 }}>
             <div className="stat stat--impact slide-up">
@@ -145,8 +168,12 @@ export default function Home() {
               <div className="value">{stats.donors}</div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* ─── Featured Needs ─── */}
+      {/* ─── Featured Needs ─── */}
+      <section className="section section--after-metrics">
+        <div className="container">
           <div className="section-head">
             <div>
               <h2>Featured Needs</h2>

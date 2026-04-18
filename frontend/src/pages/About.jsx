@@ -68,34 +68,21 @@ export default function About() {
       </section>
 
       {/* ─── How It Works ─── */}
-      <section className="section" style={{ background: "white" }}>
+      <section className="section about-steps-section">
         <div className="container">
-          <div style={{ textAlign: "center", marginBottom: 56 }}>
-            <span className="tag tag-blue" style={{ marginBottom: 16, display: "inline-block" }}>Process</span>
-            <h2 style={{ fontSize: 32, fontWeight: 800, color: "var(--gray-900)", marginBottom: 12 }}>How Yaqeen Works</h2>
-            <p style={{ color: "var(--gray-500)", maxWidth: 480, margin: "0 auto" }}>
+          <div className="about-steps__intro">
+            <span className="tag tag-blue about-steps__tag">Process</span>
+            <h2 className="about-steps__heading">How Yaqeen Works</h2>
+            <p className="about-steps__sub">
               Four simple steps. Full transparency. Zero untracked cash.
             </p>
           </div>
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-            gap: 24,
-          }}>
+          <div className="about-steps__grid">
             {STEPS.map((s) => (
-              <div key={s.num} className="card" style={{ textAlign: "center", padding: "36px 24px" }}>
-                <div style={{
-                  width: 52, height: 52, borderRadius: "50%",
-                  background: "var(--primary-50)", color: "var(--primary)",
-                  display: "grid", placeItems: "center",
-                  fontSize: 20, fontWeight: 800,
-                  margin: "0 auto 20px",
-                  fontFamily: "'Plus Jakarta Sans', sans-serif",
-                }}>
-                  {s.num}
-                </div>
-                <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--gray-900)", marginBottom: 8 }}>{s.title}</h3>
-                <p style={{ fontSize: 14, color: "var(--gray-500)", lineHeight: 1.6 }}>{s.desc}</p>
+              <div key={s.num} className="about-step-card">
+                <div className="about-step-card__num">{s.num}</div>
+                <h3 className="about-step-card__title">{s.title}</h3>
+                <p className="about-step-card__desc">{s.desc}</p>
               </div>
             ))}
           </div>
