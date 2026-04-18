@@ -23,7 +23,7 @@ export default function DonorProfile() {
         </div>
         <div className="card">
           <h3 style={{ color: "var(--gray-500)", fontSize: 12, textTransform: "uppercase", marginBottom: 12 }}>Impact</h3>
-          <p style={{ fontSize: 32, fontWeight: 800, color: "var(--blue)" }}>Rs. {me.stats.total_donated.toLocaleString()}</p>
+          <p style={{ fontSize: 32, fontWeight: 800, color: "var(--primary)" }}>Rs. {me.stats.total_donated.toLocaleString()}</p>
           <p style={{ color: "var(--gray-500)" }}>across {me.stats.donation_count} donation{me.stats.donation_count === 1 ? "" : "s"}</p>
         </div>
       </div>

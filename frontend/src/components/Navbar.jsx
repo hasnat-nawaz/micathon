@@ -1,5 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import sproutLogo from "../assets/sprout.png";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -13,8 +14,8 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="container navbar-inner">
         <Link to="/" className="logo">
-          <span className="logo-mark">≡</span>
-          <span>Equivalence Engine</span>
+          <img src={sproutLogo} alt="Yaqeen" className="logo-img" />
+          <span>Yaqeen</span>
         </Link>
         <div className="nav-links">
           <NavLink to="/" end className={({isActive}) => "nav-link" + (isActive ? " active" : "")}>Home</NavLink>

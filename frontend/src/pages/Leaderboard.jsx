@@ -28,7 +28,7 @@ export default function Leaderboard() {
                 <td><span className={`rank-badge${i < 3 ? " rank-" + (i+1) : ""}`}>{i+1}</span></td>
                 <td><strong>{r.name}</strong></td>
                 <td>{r.donation_count}</td>
-                <td><strong style={{ color: "var(--blue)" }}>Rs. {r.total_donated.toLocaleString()}</strong></td>
+                <td><strong style={{ color: "var(--primary)" }}>Rs. {r.total_donated.toLocaleString()}</strong></td>
               </tr>
             ))}
           </tbody>

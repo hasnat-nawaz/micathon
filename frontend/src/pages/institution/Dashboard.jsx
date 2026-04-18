@@ -17,7 +17,7 @@ export default function InstDashboard() {
 
       <div className="stats-grid" style={{ marginBottom: 32 }}>
         <div className="stat"><div className="label">Total needs</div><div className="value">{me?.stats?.total_needs ?? 0}</div></div>
-        <div className="stat"><div className="label">Pending</div><div className="value" style={{ color: "var(--blue)" }}>{me?.stats?.pending_needs ?? 0}</div></div>
+        <div className="stat"><div className="label">Pending</div><div className="value" style={{ color: "var(--primary)" }}>{me?.stats?.pending_needs ?? 0}</div></div>
         <div className="stat"><div className="label">Funded</div><div className="value" style={{ color: "var(--green)" }}>{me?.stats?.funded_needs ?? 0}</div></div>
         <div className="stat"><div className="label">Total raised</div><div className="value">Rs. {(me?.stats?.total_raised ?? 0).toLocaleString()}</div></div>
       </div>
@@ -25,17 +25,17 @@ export default function InstDashboard() {
       <div className="grid grid-2">
         <Link to="/institution-dashboard/needs/new" className="card card-hover" style={{ textAlign: "center", padding: 32 }}>
           <div style={{ fontSize: 36, marginBottom: 8 }}>➕</div>
-          <h3 style={{ color: "var(--blue)" }}>Post a new need</h3>
+          <h3 style={{ color: "var(--primary)" }}>Post a new need</h3>
           <p style={{ color: "var(--gray-500)", marginTop: 6 }}>Create a verified funding request.</p>
         </Link>
         <Link to="/institution-dashboard/needs" className="card card-hover" style={{ textAlign: "center", padding: 32 }}>
           <div style={{ fontSize: 36, marginBottom: 8 }}>📋</div>
-          <h3 style={{ color: "var(--blue)" }}>Manage needs</h3>
+          <h3 style={{ color: "var(--primary)" }}>Manage needs</h3>
           <p style={{ color: "var(--gray-500)", marginTop: 6 }}>Update status, edit, close out.</p>
         </Link>
         <Link to="/institution-dashboard/beneficiaries" className="card card-hover" style={{ textAlign: "center", padding: 32 }}>
           <div style={{ fontSize: 36, marginBottom: 8 }}>👥</div>
-          <h3 style={{ color: "var(--blue)" }}>Beneficiaries</h3>
+          <h3 style={{ color: "var(--primary)" }}>Beneficiaries</h3>
           <p style={{ color: "var(--gray-500)", marginTop: 6 }}>Add and link to needs.</p>
         </Link>
       </div>

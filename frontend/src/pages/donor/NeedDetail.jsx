@@ -90,7 +90,7 @@ export default function NeedDetail() {
 
             <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid var(--gray-100)" }}>
               <h4 style={{ color: "var(--gray-500)", fontSize: 12, textTransform: "uppercase", marginBottom: 10 }}>Institution</h4>
-              <Link to={`/donor-dashboard/institution/${need.institution_id}`} style={{ color: "var(--blue)", fontWeight: 600 }}>{need.institution_name}</Link>
+              <Link to={`/donor-dashboard/institution/${need.institution_id}`} style={{ color: "var(--primary)", fontWeight: 600 }}>{need.institution_name}</Link>
               <p style={{ color: "var(--gray-500)", fontSize: 13, marginTop: 4 }}>{need.institution_location}</p>
               {need.institution_email && <p style={{ fontSize: 13, marginTop: 8 }}>📧 {need.institution_email}</p>}
               {need.institution_phone && <p style={{ fontSize: 13, marginTop: 4 }}>📞 {need.institution_phone}</p>}
