@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
@@ -20,6 +20,7 @@ import InstDashboard from "./pages/institution/Dashboard.jsx";
 import InstNeeds from "./pages/institution/Needs.jsx";
 import InstNewNeed from "./pages/institution/NewNeed.jsx";
 import InstBeneficiaries from "./pages/institution/Beneficiaries.jsx";
+import InstitutionProfile from "./pages/institution/Profile.jsx";
 
 function Protected({ role, children }) {
   const { user, loading } = useAuth();
@@ -29,11 +30,23 @@ function Protected({ role, children }) {
   return children;
 }
 
+function footerExtraGap(pathname) {
+  return (
+    /^\/leaderboard(\/|$)/.test(pathname) ||
+    /^\/contact(\/|$)/.test(pathname) ||
+    /^\/donor-dashboard/.test(pathname) ||
+    /^\/institution-dashboard/.test(pathname)
+  );
+}
+
 export default function App() {
+  const location = useLocation();
+  const extraFooterGap = footerExtraGap(location.pathname);
   return (
     <>
       <Navbar />
-      <main className="fade-in">
+      <main className="app-main">
+        <div key={location.pathname} className="page-transition">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -52,11 +65,13 @@ export default function App() {
           <Route path="/institution-dashboard/needs" element={<Protected role="institution"><InstNeeds /></Protected>} />
           <Route path="/institution-dashboard/needs/new" element={<Protected role="institution"><InstNewNeed /></Protected>} />
           <Route path="/institution-dashboard/beneficiaries" element={<Protected role="institution"><InstBeneficiaries /></Protected>} />
+          <Route path="/institution-dashboard/profile" element={<Protected role="institution"><InstitutionProfile /></Protected>} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </div>
       </main>
-      <Footer />
+      <Footer className={extraFooterGap ? "footer footer--route-gap" : "footer"} />
     </>
   );
 }

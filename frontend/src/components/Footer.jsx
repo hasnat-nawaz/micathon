@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import sproutLogo from "../assets/sprout.png";
 
-export default function Footer() {
+export default function Footer({ className = "footer" }) {
   return (
-    <footer className="footer">
+    <footer className={className}>
       <div className="container">
         <div className="footer-inner">
           <div className="footer-logo">

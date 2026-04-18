@@ -114,31 +114,33 @@ export default function Home() {
       {/* ─── Trust Bar ─── */}
       <section className="trust-bar">
         <div className="container">
-          <div className="trust-bar-label">Trusted Partners & Verified Institutions</div>
-          <div className="trust-logos">
+          <p className="trust-bar-label">Trusted partners & verified institutions</p>
+          <ul className="trust-partners" role="list">
             {PARTNERS.map((p) => (
-              <div className="trust-logo" key={p.name}>
-                <div className="trust-logo-icon">{p.icon}</div>
-                <span>{p.name}</span>
-              </div>
+              <li className="trust-partner" key={p.name}>
+                <span className="trust-partner__mark" aria-hidden="true">
+                  {p.icon}
+                </span>
+                <span className="trust-partner__name">{p.name}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
       {/* ─── Stats ─── */}
       <section className="section">
         <div className="container">
-          <div className="stats-grid" style={{ marginBottom: 56 }}>
-            <div className="stat slide-up">
+          <div className="stats-grid stats-grid--home" style={{ marginBottom: 56 }}>
+            <div className="stat stat--impact slide-up">
               <div className="label">Total raised</div>
               <div className="value">Rs. {stats.raised.toLocaleString()}</div>
             </div>
-            <div className="stat slide-up">
+            <div className="stat stat--impact slide-up">
               <div className="label">Active needs</div>
               <div className="value">{stats.needs}</div>
             </div>
-            <div className="stat slide-up">
+            <div className="stat stat--impact slide-up">
               <div className="label">Active donors</div>
               <div className="value">{stats.donors}</div>
             </div>

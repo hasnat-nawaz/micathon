@@ -1,11 +1,5 @@
 import { Link } from "react-router-dom";
-
-const tagClass = {
-  urgent: "tag tag-maroon",
-  food: "tag tag-amber",
-  education: "tag tag-blue",
-  health: "tag tag-green",
-};
+import { needCategoryTagClass } from "../utils/needTagClass.js";
 
 const statusClass = {
   pending: "tag tag-blue",
@@ -13,14 +7,19 @@ const statusClass = {
   closed: "tag tag-gray",
 };
 
-export default function NeedCard({ need, linkBase = "/donor-dashboard/need" }) {
+export default function NeedCard({ need, linkBase = "/donor-dashboard/need", staggerIndex }) {
   const pct = Math.min(100, Math.round((need.amount_funded / need.amount_required) * 100));
   const isFull = need.amount_funded >= need.amount_required;
+  const enterClass = staggerIndex != null ? " need-card-enter" : "";
   return (
-    <Link to={`${linkBase}/${need.id}`} className="card card-hover need-card slide-up">
+    <Link
+      to={`${linkBase}/${need.id}`}
+      className={"card card-hover need-card" + enterClass}
+      style={staggerIndex != null ? { animationDelay: `${staggerIndex * 0.055}s` } : undefined}
+    >
       <div className="image" style={{ backgroundImage: `url(${need.image_url || "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800"})` }} />
       <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-        {need.tag && <span className={tagClass[need.tag] || "tag tag-gray"}>{need.tag}</span>}
+        {need.tag && <span className={needCategoryTagClass(need.tag)}>{need.tag}</span>}
         <span className={statusClass[need.status] || "tag tag-gray"}>{need.status}</span>
       </div>
       <div className="title">{need.title}</div>

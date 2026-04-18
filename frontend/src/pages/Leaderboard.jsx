@@ -1,6 +1,36 @@
 import { useEffect, useState } from "react";
 import api from "../api/client.js";
 
+function RankBadge({ index }) {
+  const n = index + 1;
+  if (n === 1) {
+    return (
+      <span className="leaderboard-rank leaderboard-rank--1" title="1st place">
+        <span className="leaderboard-rank__inner">{n}</span>
+      </span>
+    );
+  }
+  if (n === 2) {
+    return (
+      <span className="leaderboard-rank leaderboard-rank--2" title="2nd place">
+        <span className="leaderboard-rank__inner">{n}</span>
+      </span>
+    );
+  }
+  if (n === 3) {
+    return (
+      <span className="leaderboard-rank leaderboard-rank--3" title="3rd place">
+        <span className="leaderboard-rank__inner">{n}</span>
+      </span>
+    );
+  }
+  return (
+    <span className="leaderboard-rank leaderboard-rank--rest">
+      {n}
+    </span>
+  );
+}
+
 export default function Leaderboard() {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,30 +40,70 @@ export default function Leaderboard() {
   }, []);
 
   return (
-    <div className="container">
-      <div className="page-header">
-        <h1>🏆 Top Donors</h1>
-        <p className="sub">Ranked by total contributions across all needs.</p>
-      </div>
-      {loading ? <div className="spinner" /> : rows.length === 0 ? (
-        <div className="empty"><div className="icon">🌱</div><p>No donations yet — be the first!</p></div>
-      ) : (
-        <table className="table slide-up">
-          <thead>
-            <tr><th>Rank</th><th>Donor</th><th>Donations</th><th>Total Contributed</th></tr>
-          </thead>
-          <tbody>
-            {rows.map((r, i) => (
-              <tr key={r.id}>
-                <td><span className={`rank-badge${i < 3 ? " rank-" + (i+1) : ""}`}>{i+1}</span></td>
-                <td><strong>{r.name}</strong></td>
-                <td>{r.donation_count}</td>
-                <td><strong style={{ color: "var(--primary)" }}>Rs. {r.total_donated.toLocaleString()}</strong></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+    <>
+      <section className="page-hero-about page-hero-about--leaderboard">
+        <div className="page-hero-about__glow" aria-hidden />
+        <div className="container page-hero-about__inner">
+          <div className="hero-tag">
+            <span style={{ fontSize: 16 }}>🏆</span>
+            Community impact
+          </div>
+          <h1 className="page-hero-about__title">Leaderboard</h1>
+          <p className="page-hero-about__lead">
+            Celebrating donors who give with Yaqeen — ranked by total contributions across all verified needs.
+          </p>
+        </div>
+      </section>
+
+      <section className="section leaderboard-section">
+        <div className="container">
+          {loading ? (
+            <div className="spinner" />
+          ) : rows.length === 0 ? (
+            <div className="empty">
+              <div className="icon">🌱</div>
+              <p>No donations yet — be the first!</p>
+            </div>
+          ) : (
+            <div className="leaderboard-panel">
+              <div className="leaderboard-panel__inner">
+                <table className="leaderboard-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Rank</th>
+                      <th scope="col">Donor</th>
+                      <th scope="col">Donations</th>
+                      <th scope="col" className="leaderboard-table__amount-head">
+                        Total contributed
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((r, index) => (
+                      <tr key={r.id} className="leaderboard-row">
+                        <td>
+                          <RankBadge index={index} />
+                        </td>
+                        <td>
+                          <span className="leaderboard-donor">{r.name}</span>
+                        </td>
+                        <td>
+                          <span className="leaderboard-count">{r.donation_count}</span>
+                        </td>
+                        <td>
+                          <span className="leaderboard-amount">
+                            Rs. {r.total_donated.toLocaleString()}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+    </>
   );
 }

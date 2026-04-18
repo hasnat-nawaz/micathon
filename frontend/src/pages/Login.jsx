@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import { getApiErrorMessage } from "../utils/apiErrorMessage.js";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -17,7 +18,7 @@ export default function Login() {
       const user = await login(username, password);
       navigate(user.role === "donor" ? "/donor-dashboard" : "/institution-dashboard");
     } catch (err) {
-      setError(err.response?.data?.error || "Login failed");
+      setError(getApiErrorMessage(err, "Login failed"));
     } finally { setBusy(false); }
   };
 

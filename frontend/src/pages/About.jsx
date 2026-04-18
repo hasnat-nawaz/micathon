@@ -50,27 +50,17 @@ export default function About() {
   return (
     <>
       {/* ─── Hero Header ─── */}
-      <section style={{
-        background: "linear-gradient(135deg, var(--dark) 0%, var(--dark-mid) 100%)",
-        color: "white",
-        padding: "80px 0 60px",
-        textAlign: "center",
-        position: "relative",
-        overflow: "hidden",
-      }}>
-        <div style={{
-          position: "absolute", inset: 0,
-          background: "radial-gradient(circle at 70% 30%, rgba(102,181,57,0.12), transparent 60%)",
-        }} />
-        <div className="container" style={{ position: "relative" }}>
-          <div className="hero-tag" style={{ margin: "0 auto 20px", width: "fit-content" }}>
+      <section className="page-hero-about">
+        <div className="page-hero-about__glow" aria-hidden />
+        <div className="container page-hero-about__inner">
+          <div className="hero-tag">
             <span style={{ fontSize: 16 }}>🌱</span>
             About Yaqeen
           </div>
-          <h1 style={{ fontSize: 44, fontWeight: 800, marginBottom: 16, fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <h1 className="page-hero-about__title">
             Closing the Loop on<br />Directed Giving
           </h1>
-          <p style={{ fontSize: 17, opacity: 0.8, maxWidth: 560, margin: "0 auto", lineHeight: 1.7 }}>
+          <p className="page-hero-about__lead">
             Traditional charity hands cash to individuals. Donors lose visibility,
             beneficiaries face stigma, and trust erodes. Yaqeen fixes this.
           </p>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import { getApiErrorMessage } from "../utils/apiErrorMessage.js";
 
 export default function Signup() {
   const [form, setForm] = useState({
@@ -21,7 +22,7 @@ export default function Signup() {
       const user = await signup(form);
       navigate(user.role === "donor" ? "/donor-dashboard" : "/institution-dashboard");
     } catch (err) {
-      setError(err.response?.data?.error || "Signup failed");
+      setError(getApiErrorMessage(err, "Signup failed"));
     } finally { setBusy(false); }
   };
 

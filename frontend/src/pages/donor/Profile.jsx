@@ -10,16 +10,20 @@ export default function DonorProfile() {
     <div className="container">
       <div className="page-header">
         <h1>Your Profile</h1>
-        <p className="sub">Donor account details and giving history.</p>
       </div>
       <div className="grid grid-2">
-        <div className="card">
-          <h3 style={{ color: "var(--gray-500)", fontSize: 12, textTransform: "uppercase", marginBottom: 12 }}>Account</h3>
-          <p><strong>Name:</strong> {me.profile.name}</p>
-          <p style={{ marginTop: 6 }}><strong>Username:</strong> {me.user.username}</p>
-          <p style={{ marginTop: 6 }}><strong>Email:</strong> {me.profile.email || "—"}</p>
-          <p style={{ marginTop: 6 }}><strong>Phone:</strong> {me.profile.phone || "—"}</p>
-          <p style={{ marginTop: 6, color: "var(--gray-500)", fontSize: 13 }}>Member since {new Date(me.user.created_at).toLocaleDateString()}</p>
+        <div className="card profile-card">
+          <div className="profile-card__top">
+            <div className="profile-card__name">{me.profile.name}</div>
+            <div className="profile-card__handle">{me.user.username}</div>
+          </div>
+          <div className="profile-card__details">
+            <div className="profile-card__detail">{me.profile.email || "—"}</div>
+            <div className="profile-card__detail">{me.profile.phone || "—"}</div>
+          </div>
+          <div className="profile-card__member-since">
+            Member since {new Date(me.user.created_at).toLocaleDateString()}
+          </div>
         </div>
         <div className="card">
           <h3 style={{ color: "var(--gray-500)", fontSize: 12, textTransform: "uppercase", marginBottom: 12 }}>Impact</h3>
