@@ -12,17 +12,17 @@ export default function InstitutionProfile() {
 
   return (
     <>
-      <section className="page-hero-about page-hero-about--profile">
+      <section className="page-hero-about page-hero-about--profile page-hero-about--institution">
         <div className="page-hero-about__glow" aria-hidden />
         <div className="container page-hero-about__inner">
           <div className="hero-tag">
             <span style={{ fontSize: 16 }}>🏛️</span>
-            My profile
+            Institution profile
           </div>
           <h1 className="page-hero-about__title">My Profile</h1>
           <p className="page-hero-about__lead">
-            Your institution details and contact info<br />
-            in the same clean style as the rest of Yaqeen.
+            Your institution details and contact info — aligned with the rest of Yaqeen: dark hero band, soft mint
+            surfaces, and green-accented cards.
           </p>
         </div>
       </section>

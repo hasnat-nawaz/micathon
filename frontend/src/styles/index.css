@@ -1032,6 +1032,191 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   margin: 0;
 }
 
+/* Institution dashboard routes — dark hero (3-tier: tag / title / lead) + panels */
+.dashboard-hero--institution {
+  padding: 56px 0 64px;
+}
+.dashboard-hero--institution .dashboard-hero__narrow .hero-tag {
+  margin: 0 auto 18px;
+}
+.stats-grid--home.stats-grid--inst {
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 20px;
+}
+.stats-grid--home.stats-grid--inst .stat.stat--impact {
+  flex: 1 1 calc(25% - 17px);
+  min-width: 200px;
+  max-width: 300px;
+}
+@media (max-width: 900px) {
+  .stats-grid--home.stats-grid--inst .stat.stat--impact {
+    flex: 1 1 calc(50% - 12px);
+    max-width: none;
+  }
+}
+
+.inst-actions-intro {
+  text-align: center;
+  margin-bottom: 36px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.inst-actions-intro .tag {
+  margin-bottom: 14px;
+}
+.inst-actions-intro h2 {
+  font-size: 26px;
+  font-weight: 800;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+  color: var(--gray-900);
+}
+.inst-actions-intro p {
+  font-size: 15px;
+  color: var(--gray-600);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.inst-action-grid {
+  gap: 22px;
+}
+
+.inst-dash-action-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px 22px 28px;
+  border-radius: var(--radius-lg);
+  border: 3px solid #66b539;
+  background: #ffffff;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 14px 30px rgba(21, 27, 31, 0.12),
+    0 5px 12px rgba(21, 27, 31, 0.07);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.inst-dash-action-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 2;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.inst-dash-action-card:hover {
+  transform: translateY(-5px);
+  border-color: #66b539;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 20px 44px rgba(21, 27, 31, 0.16),
+    0 10px 20px rgba(21, 27, 31, 0.1);
+}
+.inst-dash-action-card:hover::before {
+  opacity: 1;
+}
+.inst-dash-action-card__icon {
+  font-size: 38px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.inst-dash-action-card__title {
+  font-size: 18px;
+  font-weight: 800;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+.inst-dash-action-card__desc {
+  font-size: 14px;
+  color: var(--gray-500);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 280px;
+}
+
+.inst-content-band {
+  padding: 44px 0 56px;
+}
+.inst-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.inst-toolbar__text h2 {
+  font-size: 24px;
+  font-weight: 800;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+  color: var(--gray-900);
+}
+.inst-toolbar__text p {
+  font-size: 15px;
+  color: var(--gray-500);
+  margin: 0;
+  line-height: 1.55;
+}
+
+.inst-panel {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  background: linear-gradient(180deg, #fbfdfb 0%, var(--white) 55%, #f6f8f6 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 -1px 0 rgba(21, 27, 31, 0.05) inset,
+    0 10px 28px rgba(21, 27, 31, 0.09),
+    0 4px 12px rgba(21, 27, 31, 0.05),
+    0 20px 48px rgba(102, 181, 57, 0.06);
+  overflow: hidden;
+}
+.inst-panel--padded {
+  padding: 28px 28px 32px;
+}
+.inst-panel .table {
+  width: 100%;
+}
+.inst-panel .table thead th {
+  background: rgba(102, 181, 57, 0.06);
+}
+
+.inst-beneficiary-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 28px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .inst-beneficiary-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.page-hero-about--institution {
+  padding: 64px 0 72px;
+}
+
 .donation-activity-panel {
   max-height: min(720px, 74vh);
   min-height: 400px;
@@ -2475,7 +2660,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   }
   .stat:hover,
   .stats-grid--home .stat.stat--impact:hover,
-  .about-step-card:hover {
+  .about-step-card:hover,
+  .inst-dash-action-card:hover {
     transform: none;
   }
 }
