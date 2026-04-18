@@ -55,7 +55,7 @@ export default function Leaderboard() {
         </div>
       </section>
 
-      <section className="section leaderboard-section">
+      <section className="section leaderboard-section reveal">
         <div className="container">
           {loading ? (
             <div className="spinner" />

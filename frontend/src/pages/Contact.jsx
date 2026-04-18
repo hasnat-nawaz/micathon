@@ -42,7 +42,7 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="features-section">
+      <section className="features-section reveal">
         <div className="container">
           <div className="features-header">
             <span className="tag tag-blue">Reach us</span>

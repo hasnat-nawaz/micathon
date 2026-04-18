@@ -37,7 +37,7 @@ export default function DonorDashboard() {
                 together in one calm view.
               </p>
             </div>
-            <div className="dashboard-streak-glass">
+            <div className="dashboard-streak-glass reveal">
               <div className="dashboard-streak-glass__label">Donation streak</div>
               <div className="dashboard-streak-glass__value">{streak === null ? "…" : streak}</div>
               <div className="dashboard-streak-glass__unit">days in a row</div>
@@ -51,7 +51,7 @@ export default function DonorDashboard() {
         </div>
       </section>
 
-      <section className="section" style={{ background: "var(--white)" }}>
+      <section className="section reveal" style={{ background: "var(--white)" }}>
         <div className="container">
           <div className="section-head dashboard-needs-head">
             <div className="dashboard-needs-head__text">
@@ -81,7 +81,7 @@ export default function DonorDashboard() {
       </section>
 
       {me?.donations?.length > 0 && (
-        <section className="features-section">
+        <section className="features-section reveal">
           <div className="container">
             <div className="features-header">
               <span className="tag tag-blue">Activity</span>
@@ -91,10 +91,14 @@ export default function DonorDashboard() {
                 and date kept transparent and easy to read.
               </p>
             </div>
-            <div className="donation-activity-panel">
+            <div className="donation-activity-panel reveal">
               <div className="donation-activity-list">
-              {me.donations.map((d) => (
-                <article className="donation-row" key={d.id}>
+              {me.donations.map((d, i) => (
+                <article
+                  className="donation-row reveal"
+                  key={d.id}
+                  style={{ transitionDelay: `${i * 45}ms` }}
+                >
                   <div className="donation-row__accent" aria-hidden />
                   <div className="donation-row__body">
                     <div className="donation-row__main">

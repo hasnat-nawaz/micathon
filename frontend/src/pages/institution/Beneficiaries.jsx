@@ -24,10 +24,10 @@ export default function Beneficiaries() {
 
   return (
     <div className="container">
-      <div className="page-header"><h1>Beneficiaries</h1><p className="sub">People served by your institution. Link them to needs.</p></div>
+      <div className="page-header reveal"><h1>Beneficiaries</h1><p className="sub">People served by your institution. Link them to needs.</p></div>
 
       <div className="grid" style={{ gridTemplateColumns: "1fr 2fr", gap: 24, alignItems: "start" }}>
-        <form className="card form" onSubmit={add}>
+        <form className="card form reveal" onSubmit={add}>
           <h3>Add beneficiary</h3>
           {error && <div className="banner-error">{error}</div>}
           <div className="form-row">
@@ -41,7 +41,7 @@ export default function Beneficiaries() {
           <button className="btn btn-primary" disabled={busy}>{busy ? "Adding…" : "Add"}</button>
         </form>
 
-        <div>
+        <div className="reveal" style={{ transitionDelay: "80ms" }}>
           {list.length === 0 ? (
             <div className="empty"><div className="icon">👥</div><p>No beneficiaries yet.</p></div>
           ) : (

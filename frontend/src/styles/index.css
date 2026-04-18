@@ -131,6 +131,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   padding: 76px 0 92px;
 }
 
+.page-hero-about--profile {
+  padding: 64px 0 72px;
+}
+
 @media (max-width: 768px) {
   .page-hero-about__title {
     font-size: 32px;
@@ -144,6 +148,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   }
   .page-hero-about--leaderboard {
     padding: 56px 0 72px;
+  }
+  .page-hero-about--profile {
+    padding: 52px 0 58px;
   }
 }
 
@@ -416,57 +423,191 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* Profile summary card (donor / institution profile pages) */
 .profile-card {
   min-height: 240px;
-  padding: 28px;
+  padding: 4px;
   box-shadow: var(--shadow-3d);
   transform: translateZ(0);
   background: linear-gradient(180deg, #ffffff 0%, #fafbf9 100%);
-  border: 1px solid rgba(102, 181, 57, 0.14);
+  border: 1px solid rgba(102, 181, 57, 0.18);
   display: flex;
   flex-direction: column;
-  gap: 18px;
+}
+
+.profile-card__surface {
+  min-height: 100%;
+  border: 4px solid var(--primary);
+  border-radius: calc(var(--radius) - 2px);
+  background: linear-gradient(180deg, #ffffff 0%, #fcfdfb 100%);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profile-grid {
+  align-items: stretch;
+}
+
+.profile-history {
+  margin-top: 0;
+  padding: 44px 0 48px;
+  border-top: 1px solid var(--gray-200);
+}
+
+.profile-history .section-head {
+  width: 100%;
+  margin-bottom: 24px;
+  justify-content: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.profile-history .section-head > div {
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.profile-history .section-head h2,
+.profile-history .section-head p {
+  text-align: center;
+}
+
+.section-head--center {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.profile-impact-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcfa 100%);
+  border: 1px solid rgba(102, 181, 57, 0.18);
+  padding: 4px;
+}
+
+.profile-impact-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.profile-impact-card__surface {
+  min-height: 100%;
+  border: 4px solid var(--primary);
+  border-radius: calc(var(--radius) - 2px);
+  background:
+    radial-gradient(circle at 70% 20%, rgba(102, 181, 57, 0.12), transparent 42%),
+    linear-gradient(180deg, #ffffff 0%, #fbfcfa 100%);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.profile-impact-card__kicker {
+  color: var(--primary-dark);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.profile-impact-card__value {
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--gray-900);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  line-height: 1.12;
+}
+
+.profile-impact-card__sub {
+  margin-top: 12px;
+  color: var(--gray-600);
+  font-weight: 600;
+  font-size: 15px;
+  max-width: 240px;
+}
+
+.profile-impact-card.card-hover:hover::before {
+  opacity: 1;
+}
+
+.dashboard-hero--profile .dashboard-hero__title,
+.dashboard-hero--profile .dashboard-hero__lead {
+  text-align: center;
+}
+
+.dashboard-hero--profile .dashboard-hero__lead {
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .profile-card__top {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .profile-card__name {
-  font-size: 26px;
+  font-size: 34px;
   font-weight: 900;
   color: var(--gray-900);
-  letter-spacing: -0.01em;
-  line-height: 1.15;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
 }
 
 .profile-card__handle {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
-  color: var(--gray-600);
+  color: var(--primary-dark);
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 .profile-card__details {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   color: var(--gray-800);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .profile-card__detail {
   padding: 10px 12px;
-  border-radius: 12px;
-  background: rgba(102, 181, 57, 0.06);
-  border: 1px solid rgba(102, 181, 57, 0.12);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(102, 181, 57, 0.07), rgba(102, 181, 57, 0.03));
+  border: 1px solid rgba(102, 181, 57, 0.16);
+  color: var(--gray-600);
+  line-height: 1.5;
 }
 
 .profile-card__member-since {
   margin-top: auto;
   color: var(--gray-500);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.profile-card.card-hover:hover .profile-card__surface,
+.profile-impact-card.card-hover:hover .profile-impact-card__surface {
+  border-color: var(--primary-light);
 }
 
 /* ─── Hero ─── */
@@ -754,7 +895,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 28px 32px;
+  gap: 22px 20px;
   flex-wrap: wrap;
 }
 .dashboard-hero__left {
@@ -799,9 +940,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   width: 100%;
   max-width: none;
   margin: 0;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: 24px 40px;
+  gap: 22px 52px;
 }
 
 .dashboard-hero--donor .dashboard-hero__left {
@@ -822,9 +963,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .dashboard-streak-glass {
   flex: 0 0 auto;
-  min-width: 200px;
+  min-width: 176px;
   text-align: center;
-  padding: 22px 28px;
+  padding: 18px 22px;
   border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.07);
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -1989,6 +2130,53 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .table th { background: var(--gray-50); font-weight: 600; color: var(--gray-600); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
 .table tr:last-child td { border-bottom: none; }
 
+/* Donor profile: donation history table (3D panel + row bands) */
+.profile-donation-table {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(102, 181, 57, 0.2);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.92) inset,
+    0 12px 36px rgba(21, 27, 31, 0.1),
+    0 6px 16px rgba(21, 27, 31, 0.06);
+  background: linear-gradient(180deg, #ffffff 0%, #fafdfb 100%);
+}
+
+.profile-donation-table thead th {
+  background: linear-gradient(180deg, var(--primary-50) 0%, #f2f9ef 100%);
+  color: var(--primary-dark);
+  border-bottom: 1px solid rgba(102, 181, 57, 0.22);
+  font-weight: 800;
+}
+
+.profile-donation-table tbody tr:nth-child(odd) td {
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.profile-donation-table tbody tr:nth-child(even) td {
+  background: rgba(102, 181, 57, 0.045);
+}
+
+.profile-donation-table tbody tr td {
+  border-bottom: 1px solid var(--gray-200);
+  transition: background 0.2s ease;
+}
+
+.profile-donation-table tbody tr:hover td {
+  background: rgba(102, 181, 57, 0.09);
+}
+
+.profile-donation-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.profile-donation-table th:nth-child(4),
+.profile-donation-table th:nth-child(5),
+.profile-donation-table td:nth-child(4),
+.profile-donation-table td:nth-child(5) {
+  text-align: right;
+}
+
 /* ─── Leaderboard page (3D panel + Yaqeen-green rank pills) ─── */
 .leaderboard-section {
   background: var(--gray-50);
@@ -2225,6 +2413,21 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .fade-in { animation: fade .4s ease; }
 .slide-up { animation: slideUp .5s cubic-bezier(.4,0,.2,1); }
 
+/* Scroll reveal: elements animate in as they enter viewport */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.reveal--in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Route change: whole page eases up; top-level sections stagger slightly */
 @keyframes pageRouteIn {
   from { opacity: 0; transform: translateY(14px); }
@@ -2253,6 +2456,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .page-transition,
   .page-transition > * {
     animation: none !important;
+  }
+  .reveal,
+  .reveal.reveal--in {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
   .need-card-enter {
     animation: none !important;

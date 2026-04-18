@@ -33,9 +33,9 @@ export default function NewNeed() {
 
   return (
     <div className="container" style={{ maxWidth: 700 }}>
-      <div className="page-header"><h1>Post a new need</h1><p className="sub">Be specific — donors fund clarity.</p></div>
+      <div className="page-header reveal"><h1>Post a new need</h1><p className="sub">Be specific — donors fund clarity.</p></div>
       {error && <div className="banner-error" style={{ marginBottom: 16 }}>{error}</div>}
-      <form className="form card" onSubmit={submit}>
+      <form className="form card reveal" onSubmit={submit}>
         <div className="form-row">
           <label>Title</label>
           <input value={form.title} onChange={(e) => update("title", e.target.value)} required placeholder="e.g. School fees for Sara, Grade 6" />

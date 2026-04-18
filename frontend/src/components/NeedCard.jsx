@@ -10,12 +10,11 @@ const statusClass = {
 export default function NeedCard({ need, linkBase = "/donor-dashboard/need", staggerIndex }) {
   const pct = Math.min(100, Math.round((need.amount_funded / need.amount_required) * 100));
   const isFull = need.amount_funded >= need.amount_required;
-  const enterClass = staggerIndex != null ? " need-card-enter" : "";
   return (
     <Link
       to={`${linkBase}/${need.id}`}
-      className={"card card-hover need-card" + enterClass}
-      style={staggerIndex != null ? { animationDelay: `${staggerIndex * 0.055}s` } : undefined}
+      className="card card-hover need-card reveal"
+      style={staggerIndex != null ? { transitionDelay: `${staggerIndex * 80}ms` } : undefined}
     >
       <div className="image" style={{ backgroundImage: `url(${need.image_url || "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800"})` }} />
       <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>

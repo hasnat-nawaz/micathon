@@ -77,6 +77,7 @@ export default function NeedDetail() {
         <div className="grid" style={{ gridTemplateColumns: "1.4fr 1fr", gap: 32 }}>
           <div>
             <div
+              className="reveal"
               style={{
                 width: "100%",
                 height: 320,
@@ -99,7 +100,7 @@ export default function NeedDetail() {
             <p style={{ color: "var(--gray-600)", marginBottom: 24 }}>{need.description}</p>
 
             {need.beneficiary_name && (
-              <div className="card" style={{ marginBottom: 16 }}>
+              <div className="card reveal" style={{ marginBottom: 16 }}>
                 <h4 style={{ color: "var(--gray-500)", fontSize: 12, textTransform: "uppercase", marginBottom: 6 }}>
                   Beneficiary
                 </h4>
@@ -114,7 +115,7 @@ export default function NeedDetail() {
           </div>
 
           <div>
-            <div className="card" style={{ position: "sticky", top: 90 }}>
+            <div className="card reveal" style={{ position: "sticky", top: 90, transitionDelay: "80ms" }}>
               <div className="progress-row" style={{ fontSize: 14 }}>
                 <strong>Rs. {need.amount_funded.toLocaleString()}</strong>
                 <span>{pct}%</span>

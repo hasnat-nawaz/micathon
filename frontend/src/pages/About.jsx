@@ -68,7 +68,7 @@ export default function About() {
       </section>
 
       {/* ─── How It Works ─── */}
-      <section className="section about-steps-section">
+      <section className="section about-steps-section reveal">
         <div className="container">
           <div className="about-steps__intro">
             <span className="tag tag-blue about-steps__tag">Process</span>
@@ -90,7 +90,7 @@ export default function About() {
       </section>
 
       {/* ─── Features Grid ─── */}
-      <section className="features-section">
+      <section className="features-section reveal">
         <div className="container">
           <div className="features-header">
             <span className="tag tag-blue">Features</span>
@@ -112,7 +112,7 @@ export default function About() {
       </section>
 
       {/* ─── CTA ─── */}
-      <section className="cta-section">
+      <section className="cta-section reveal">
         <div className="container" style={{ position: "relative" }}>
           <h2>Ready to give with certainty?</h2>
           <p>Join Yaqeen today and ensure every rupee reaches where it's needed most.</p>

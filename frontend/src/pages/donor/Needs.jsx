@@ -29,9 +29,9 @@ export default function DonorNeeds() {
         </div>
       </section>
 
-      <section className="section" style={{ background: "var(--white)" }}>
+      <section className="section reveal" style={{ background: "var(--white)" }}>
         <div className="container">
-          <div className="filter-bar">
+          <div className="filter-bar reveal">
             {TAGS.map((t) => (
               <button
                 key={t}

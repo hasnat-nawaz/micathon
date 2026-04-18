@@ -24,7 +24,7 @@ export default function InstNeeds() {
 
   return (
     <div className="container">
-      <div className="page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "end", flexWrap: "wrap", gap: 12 }}>
+      <div className="page-header reveal" style={{ display: "flex", justifyContent: "space-between", alignItems: "end", flexWrap: "wrap", gap: 12 }}>
         <div>
           <h1>Manage Needs</h1>
           <p className="sub">All needs posted by your institution.</p>
@@ -35,7 +35,7 @@ export default function InstNeeds() {
       {loading ? <div className="spinner" /> : needs.length === 0 ? (
         <div className="empty"><div className="icon">📋</div><p>No needs yet.</p><Link to="/institution-dashboard/needs/new" className="btn btn-primary" style={{ marginTop: 16 }}>Create your first</Link></div>
       ) : (
-        <table className="table">
+        <table className="table reveal">
           <thead><tr><th>Title</th><th>Funded</th><th>Goal</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody>
             {needs.map((n) => {

@@ -118,7 +118,7 @@ export default function Home() {
       </section>
 
       {/* ─── Partner logos (infinite scroll belt) ─── */}
-      <section className="trust-bar" aria-labelledby="trust-bar-heading">
+      <section className="trust-bar reveal" aria-labelledby="trust-bar-heading">
         <div className="container">
           <p id="trust-bar-heading" className="trust-bar-label">
             Trusted partners & verified institutions
@@ -152,7 +152,7 @@ export default function Home() {
       </section>
 
       {/* ─── Stats (dark band + glass cards) ─── */}
-      <section className="home-metrics-band" aria-label="Platform metrics">
+      <section className="home-metrics-band reveal" aria-label="Platform metrics">
         <div className="container">
           <div className="stats-grid stats-grid--home" style={{ marginBottom: 56 }}>
             <div className="stat stat--impact slide-up">
@@ -172,7 +172,7 @@ export default function Home() {
       </section>
 
       {/* ─── Featured Needs ─── */}
-      <section className="section section--after-metrics">
+      <section className="section section--after-metrics reveal">
         <div className="container">
           <div className="section-head">
             <div>
@@ -207,7 +207,7 @@ export default function Home() {
       </section>
 
       {/* ─── CTA Section ─── */}
-      <section className="cta-section">
+      <section className="cta-section reveal">
         <div className="container" style={{ position: "relative" }}>
           <h2>Ready to make a difference?</h2>
           <p>Join thousands of donors creating real, measurable impact across Pakistan.</p>
