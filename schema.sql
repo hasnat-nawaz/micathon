@@ -123,13 +123,13 @@ INSERT INTO needs (id, institution_id, beneficiary_id, title, description, amoun
    'School fees for Sara (Grade 6)',
    'Sara is a bright student whose family cannot afford this term''s fees. Funds go directly to school accounts.',
    15000, 5000, 'education', 2, 'pending',
-   'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800'),
+   '/needs/seed-school-fees.png'),
 
   ('ddddddd2-0000-0000-0000-000000000002', 'bbbbbbb1-0000-0000-0000-000000000001', 'ccccccc2-0000-0000-0000-000000000002',
    'Textbooks & uniform for Hamza',
    'Complete book set and uniform for the new academic year.',
    8000, 0, 'education', 1, 'pending',
-   'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800'),
+   '/needs/seed-hamza-textbooks.png'),
 
   ('ddddddd3-0000-0000-0000-000000000003', 'bbbbbbb2-0000-0000-0000-000000000002', 'ccccccc3-0000-0000-0000-000000000003',
    'Monthly groceries for Fatima''s family',
@@ -141,7 +141,7 @@ INSERT INTO needs (id, institution_id, beneficiary_id, title, description, amoun
    'Emergency winter blankets (50 families)',
    'Urgent: blankets and warm clothing for displaced families this winter.',
    50000, 18000, 'urgent', 3, 'pending',
-   'https://images.unsplash.com/photo-1584824486509-112e4181ff6b?w=800');
+   '/needs/seed-winter-blankets.png');
 
 INSERT INTO donations (need_id, donor_id, amount, method) VALUES
   ('ddddddd1-0000-0000-0000-000000000001', 'aaaaaaa1-0000-0000-0000-000000000001', 5000,  'card'),

@@ -1,7 +1,9 @@
 require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const { pool } = require("./db/pool");
+const { ensureNeedUploadsDir } = require("./lib/needImageUpload");
 
 const authRoutes = require("./routes/auth");
 const needsRoutes = require("./routes/needs");
@@ -20,6 +22,9 @@ app.use(
   })
 );
 app.use(express.json({ limit: "1mb" }));
+
+ensureNeedUploadsDir();
+app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
 app.get("/api/health", (_req, res) => res.json({ ok: true }));
 
@@ -43,8 +48,18 @@ pool
   .query("SELECT 1")
   .then(() => {
     console.log("✅ Connected to PostgreSQL");
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
       console.log(`🚀 Server running on http://localhost:${PORT}`);
+    });
+    server.on("error", (err) => {
+      if (err.code === "EADDRINUSE") {
+        console.error(
+          `❌ Port ${PORT} is already in use. Stop the other process (e.g. \`ss -tlnp | grep ${PORT}\` then kill that PID) or set PORT=5001 in backend/.env`
+        );
+      } else {
+        console.error("❌ Server listen error:", err);
+      }
+      process.exit(1);
     });
   })
   .catch((err) => {

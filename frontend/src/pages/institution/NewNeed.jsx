@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/client.js";
 
+const ACCEPT = "image/png,image/jpeg,image/jpg,image/webp,image/svg+xml,.png,.jpg,.jpeg,.webp,.svg";
+
 export default function NewNeed() {
   const [form, setForm] = useState({
     title: "",
@@ -9,9 +11,10 @@ export default function NewNeed() {
     amount_required: "",
     tag: "education",
     priority: 1,
-    image_url: "",
     beneficiary_id: "",
   });
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [beneficiaries, setBeneficiaries] = useState([]);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -24,16 +27,48 @@ export default function NewNeed() {
       .catch(() => {});
   }, []);
 
+  useEffect(() => {
+    if (!imageFile) {
+      setImagePreview(null);
+      return;
+    }
+    const url = URL.createObjectURL(imageFile);
+    setImagePreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [imageFile]);
+
   const update = (k, v) => setForm((f) => ({ ...f, [k]: v }));
+
+  const onImageChange = (e) => {
+    const f = e.target.files?.[0] ?? null;
+    setImageFile(f);
+    e.target.value = "";
+  };
 
   const submit = async (e) => {
     e.preventDefault();
     setError("");
     setBusy(true);
     try {
-      const payload = { ...form, amount_required: Number(form.amount_required), priority: Number(form.priority) };
-      if (!payload.beneficiary_id) delete payload.beneficiary_id;
-      await api.post("/needs", payload);
+      if (imageFile) {
+        const fd = new FormData();
+        fd.append("title", form.title);
+        fd.append("description", form.description || "");
+        fd.append("amount_required", String(Number(form.amount_required)));
+        fd.append("tag", form.tag);
+        fd.append("priority", String(Number(form.priority)));
+        if (form.beneficiary_id) fd.append("beneficiary_id", form.beneficiary_id);
+        fd.append("image", imageFile);
+        await api.post("/needs", fd);
+      } else {
+        const payload = {
+          ...form,
+          amount_required: Number(form.amount_required),
+          priority: Number(form.priority),
+        };
+        if (!payload.beneficiary_id) delete payload.beneficiary_id;
+        await api.post("/needs", payload);
+      }
       navigate("/institution-dashboard/needs");
     } catch (err) {
       setError(err.response?.data?.error || "Failed to create need");
@@ -111,8 +146,26 @@ export default function NewNeed() {
               </div>
             </div>
             <div className="form-row">
-              <label>Image URL (optional)</label>
-              <input value={form.image_url} onChange={(e) => update("image_url", e.target.value)} placeholder="https://… (bill, photo, etc.)" />
+              <label>Image (optional)</label>
+              <input type="file" accept={ACCEPT} onChange={onImageChange} />
+              <p className="sub" style={{ marginTop: 8, marginBottom: 0 }}>
+                PNG, JPEG, WebP, or SVG — max 2 MB. Stored on the server for this testing phase.
+              </p>
+              {imagePreview && (
+                <div
+                  style={{
+                    marginTop: 12,
+                    width: "100%",
+                    maxWidth: 360,
+                    height: 180,
+                    borderRadius: "var(--radius)",
+                    backgroundImage: `url(${imagePreview})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    border: "1px solid var(--gray-200)",
+                  }}
+                />
+              )}
             </div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 8 }}>
               <button type="button" className="btn btn-secondary" onClick={() => navigate(-1)}>

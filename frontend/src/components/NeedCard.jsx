@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { needCategoryTagClass } from "../utils/needTagClass.js";
+import { resolveNeedImageUrl } from "../utils/needImageUrl.js";
 
 const statusClass = {
   pending: "tag tag-blue",
@@ -16,7 +17,7 @@ export default function NeedCard({ need, linkBase = "/donor-dashboard/need", sta
       className="card card-hover need-card reveal"
       style={staggerIndex != null ? { transitionDelay: `${staggerIndex * 80}ms` } : undefined}
     >
-      <div className="image" style={{ backgroundImage: `url(${need.image_url || "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800"})` }} />
+      <div className="image" style={{ backgroundImage: `url(${resolveNeedImageUrl(need.image_url)})` }} />
       <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
         {need.tag && <span className={needCategoryTagClass(need.tag)}>{need.tag}</span>}
         <span className={statusClass[need.status] || "tag tag-gray"}>{need.status}</span>

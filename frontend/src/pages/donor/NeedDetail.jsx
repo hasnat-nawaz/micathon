@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import api from "../../api/client.js";
 import { needCategoryTagClass } from "../../utils/needTagClass.js";
+import { resolveNeedImageUrl } from "../../utils/needImageUrl.js";
 
 const PAY_METHODS = [
   { id: "easypaisa", label: "EasyPaisa", logoSrc: "/payments/easypaisa.png" },
@@ -82,7 +83,7 @@ export default function NeedDetail() {
                 width: "100%",
                 height: 320,
                 borderRadius: "var(--radius)",
-                backgroundImage: `url(${need.image_url})`,
+                backgroundImage: `url(${resolveNeedImageUrl(need.image_url)})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 marginBottom: 20,
