@@ -1,167 +1,188 @@
-# The Equivalence Engine — Secure Directed Giving Platform
+# Yaqeen — Directed Giving Platform
 
-A full-stack PERN application (PostgreSQL, Express, React, Node) for transparent, directed donations. Donors fund verified needs uploaded by trusted institutions — no cash ever touches a beneficiary directly.
+**Yaqeen** is a full-stack web application for transparent, institution-verified giving. Donors fund specific **needs** (tuition, relief, medical support, and similar) posted by registered institutions; beneficiaries receive services and accountability, not cash payouts. The repository is named **equivalence-engine**; this document describes the codebase as it ships today.
 
 ---
 
-## 📦 What's Inside
+## Overview
+
+| Layer | Technology |
+|--------|------------|
+| **API** | Node.js, Express, `pg` (PostgreSQL), JWT auth, bcrypt |
+| **Client** | React 18, Vite, React Router, Axios |
+| **Data** | PostgreSQL 13+ (`schema.sql` includes schema and seed data) |
+
+**Core capabilities**
+
+- **Donors** — Browse and filter needs, view need detail, donate (recorded contributions), donor dashboard, profile, and public leaderboard.
+- **Institutions** — Dashboard with metrics, create and manage needs (including optional cover image upload), beneficiaries, and profile.
+- **Auth** — Signup and login with role-based access (`donor` | `institution`); protected routes on both client and server.
+
+**Need images** — Multipart uploads are handled on the server (Multer). Configure **ImageKit** (`IMAGEKIT_*`) for cloud URLs, or omit those variables to store files under `backend/uploads/` and serve them at `/uploads/`.
+
+---
+
+## Repository layout
 
 ```
 equivalence-engine/
-├── backend/         Express + PostgreSQL API server
-├── frontend/        React (Vite) client app
-├── schema.sql       Complete PostgreSQL schema + demo seed data
-└── README.md        This file
+├── package.json          # Root: setup + concurrent dev (backend + frontend)
+├── schema.sql            # PostgreSQL DDL + demo seed
+├── README.md
+├── backend/
+│   ├── .env.example      # Copy to .env — see Environment variables
+│   ├── src/
+│   │   ├── server.js     # Express app, `/api/*`, static `/uploads`
+│   │   ├── routes/       # auth, needs, donations, institutions, beneficiaries, leaderboard, me
+│   │   ├── db/           # Pool configuration
+│   │   └── lib/          # Need image upload (ImageKit + local fallback)
+│   └── uploads/          # Local image storage (gitignored when used)
+└── frontend/
+    ├── .env              # Optional: VITE_API_URL (see Development)
+    ├── vite.config.js    # Dev proxy: /api and /uploads → backend
+    └── src/              # Pages, components, API client, auth context
 ```
 
 ---
 
-## ✅ Prerequisites
+## Prerequisites
 
-Install these first:
-
-| Tool         | Version | Check                     |
-|--------------|---------|---------------------------|
-| Node.js      | ≥ 18    | `node -v`                 |
-| npm          | ≥ 9     | `npm -v`                  |
-| PostgreSQL   | ≥ 13    | `psql --version`          |
+- **Node.js** 18 or newer (`node -v`)
+- **npm** 9+ (`npm -v`)
+- **PostgreSQL** 13+ (`psql --version`)
 
 ---
 
-## 🚀 Local Setup (5 steps)
+## Quick start
 
-### 1. Create the database
-
-Open a terminal and run:
+From the repository root:
 
 ```bash
-# Create the database (uses your default postgres user)
-createdb equivalence_engine
+npm run setup
+```
 
-# Load the schema + demo data
+This installs dependencies for the root workspace, `backend/`, and `frontend/`.
+
+### Database
+
+```bash
+createdb equivalence_engine
 psql -d equivalence_engine -f schema.sql
 ```
 
-> If `createdb` is not on your PATH, open `psql` and run `CREATE DATABASE equivalence_engine;` manually, then `\c equivalence_engine` and `\i schema.sql`.
+If `createdb` is unavailable, create the database in `psql`, connect with `\c equivalence_engine`, then run `\i schema.sql`.
 
-### 2. Configure the backend
-
-```bash
-cd backend
-cp .env.example .env
-```
-
-Open `backend/.env` and set `DATABASE_URL`.
-
-- For **local Postgres**, a typical value looks like:
-
-```
-PORT=5000
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/equivalence_engine
-JWT_SECRET=change-me-to-a-long-random-string
-CLIENT_ORIGIN=http://localhost:5173
-```
-
-> Using **Neon**: paste your Neon connection string into `DATABASE_URL` and you're done. The backend auto-enables SSL for hosted databases like Neon.
-
-### 3. Install + run the backend
+### Environment — backend
 
 ```bash
-cd backend
-npm install
-npm run dev
+cp backend/.env.example backend/.env
 ```
 
-Backend runs on  **http://localhost:5000**. You should see:
-```
-✅ Connected to PostgreSQL
-🚀 Server running on http://localhost:5000
-```
+Edit `backend/.env` at minimum:
 
-### 4. Install + run the frontend
+| Variable | Purpose |
+|----------|---------|
+| `DATABASE_URL` | PostgreSQL connection string (local or hosted, e.g. Neon) |
+| `JWT_SECRET` | Long random string used to sign JWTs |
+| `PORT` | API port (default `5000`) |
+| `CLIENT_ORIGIN` | Browser origin for CORS (default `http://localhost:5173`) |
+| `IMAGEKIT_PUBLIC_KEY` | Optional — ImageKit public key for need cover uploads |
+| `IMAGEKIT_PRIVATE_KEY` | Optional — ImageKit private key |
+| `IMAGEKIT_URL_ENDPOINT` | Optional — e.g. `https://ik.imagekit.io/your_id/` |
+| `IMAGEKIT_FOLDER` | Optional — folder segment in ImageKit (no leading/trailing slashes) |
 
-In a **new terminal**: 
+If ImageKit variables are **not** set, uploaded images are written to `backend/uploads/` and served by Express at `/uploads/...`.
+
+### Run locally
+
+**Option A — single command (recommended)**
 
 ```bash
-cd frontend
-npm install
-npm run dev
+npm start
 ```
 
-Frontend runs on **http://localhost:5173**.
+Runs the API (nodemon) and the Vite dev server together. Default URLs:
 
-### 5. Log in with demo accounts
+- **Frontend:** http://localhost:5173  
+- **API:** http://localhost:5000 (health check: `GET http://localhost:5000/api/health`)
 
-Open http://localhost:5173 and use any of these:
+**Option B — two terminals**
 
-| Role        | Username      | Password    |
-|-------------|---------------|-------------|
-| Donor       | `alice`       | `password`  |
-| Donor       | `bob`         | `password`  |
-| Institution | `hopeschool`  | `password`  |
-| Institution | `careNGO`     | `password`  |
+```bash
+cd backend && npm run dev
+cd frontend && npm run dev
+```
 
-Or sign up a new account from `/signup`.
+### Frontend API base URL
 
----
+- **Development with Vite:** The client defaults to relative `/api`, which Vite proxies to `http://127.0.0.1:5000` (see `frontend/vite.config.js`). You normally do **not** need `frontend/.env` for local work.
+- **Production or preview without proxy:** Set `VITE_API_URL` to your deployed API base, including `/api`, e.g. `https://api.example.com/api`.
 
-## 🧪 Testing the Flow
+### Production build (frontend only)
 
-1. Log in as **`hopeschool`** → go to **Manage Needs → New Need** → create a need.
-2. Log out, log in as **`alice`** → browse needs → click **Donate** → choose Card / EasyPaisa / JazzCash → confirm.
-3. The need's funded amount updates; if fully funded its status becomes `funded`.
-4. Visit `/leaderboard` to see top donors ranked by total contribution.
+```bash
+cd frontend && npm run build
+```
 
----
-
-## 📡 API Reference (quick)
-
-All routes are prefixed with `/api`.
-
-**Auth**
-- `POST /auth/signup` — `{ username, password, role, name, ...profile }`
-- `POST /auth/login` — `{ username, password }` → `{ token, user }`
-
-**Needs**
-- `GET  /needs` — list all (filter: `?tag=urgent&status=pending`)
-- `GET  /needs/:id` — single need
-- `POST /needs` *(institution)* — create
-- `PATCH /needs/:id` *(institution)* — update
-- `PATCH /needs/:id/status` *(institution)* — change status
-
-**Donations**
-- `POST /donations` *(donor)* — `{ need_id, amount, method }`
-
-**Institutions / Beneficiaries / Leaderboard**
-- `GET  /institutions/:id`
-- `GET  /beneficiaries` *(institution)*
-- `POST /beneficiaries` *(institution)*
-- `GET  /leaderboard`
-
-Authenticated requests must send `Authorization: Bearer <token>`.
+Serve the `frontend/dist` output behind any static host; ensure API calls target the correct origin via `VITE_API_URL` at build time.
 
 ---
 
-## 🛠️ Troubleshooting
+## Demo accounts
 
-**`ECONNREFUSED` on backend start**
-→ Postgres isn't running, or `DATABASE_URL` is wrong. Test with `psql -d equivalence_engine -c "SELECT 1"`.
+After loading `schema.sql`, you can sign in at `/login`:
 
-**Frontend shows "Network Error" on login**
-→ Backend not running, or CORS blocked. Make sure backend is on port 5000 and `CLIENT_ORIGIN` matches your frontend URL.
+| Role | Username | Password |
+|------|----------|----------|
+| Donor | `alice` | `password` |
+| Donor | `bob` | `password` |
+| Institution | `hopeschool` | `password` |
+| Institution | `careNGO` | `password` |
 
-**Port already in use**
-→ Change `PORT` in `backend/.env` and update `VITE_API_URL` in `frontend/.env` to match.
-
-**`uuid_generate_v4() does not exist`**
-→ The schema enables `uuid-ossp`; if your Postgres user lacks permission, run `CREATE EXTENSION "uuid-ossp";` as a superuser first.
+New accounts can be created from `/signup`.
 
 ---
 
-## 🏗️ Tech Stack
+## Suggested manual test flow
 
-- **Backend**: Express, pg, bcryptjs, jsonwebtoken, cors, dotenv
-- **Frontend**: React 18, Vite, React Router, Axios
-- **Database**: PostgreSQL 13+
+1. Sign in as an **institution** → create a need (optionally upload a cover image) → confirm it appears in manage-needs and for donors.
+2. Sign in as a **donor** → browse needs → open a need → **Donate now** → enter amount and choose payment method (EasyPaisa, JazzCash, or card/Mastercard in the UI) → confirm; funded totals and status update accordingly.
+3. Open `/leaderboard` to verify donor rankings by total contributed amount.
 
-Built for clarity, simplicity, and real-world usability.
+---
+
+## API summary
+
+All JSON routes are under **`/api`**. Authenticated requests send `Authorization: Bearer <token>` unless noted as public.
+
+| Area | Methods | Notes |
+|------|---------|--------|
+| **Health** | `GET /api/health` | Public |
+| **Auth** | `POST /api/auth/signup`, `POST /api/auth/login` | Public |
+| **Needs** | `GET /api/needs`, `GET /api/needs/:id` | Query: `tag`, `status`, `institution_id` |
+| **Needs** | `POST /api/needs`, `PATCH /api/needs/:id`, `PATCH /api/needs/:id/status` | Institution role; `POST` supports JSON or `multipart/form-data` with `image` field |
+| **Donations** | `POST /api/donations` | Donor role; body `{ need_id, amount, method }` |
+| **Institutions** | `GET /api/institutions/:id` | Public |
+| **Beneficiaries** | `GET`, `POST /api/beneficiaries` | Institution role |
+| **Leaderboard** | `GET /api/leaderboard` | Public |
+| **Me** | `GET /api/me` | Authenticated donor or institution profile + stats |
+
+---
+
+## Troubleshooting
+
+| Symptom | What to check |
+|---------|----------------|
+| **`EADDRINUSE` on port 5000** | Another process is bound to that port. Use `ss -tlnp` or `lsof -i :5000` to find the listener, stop the old Node process, or set `PORT` in `backend/.env` and align the Vite proxy / `VITE_API_URL`. |
+| **PostgreSQL connection errors** | `DATABASE_URL`, Postgres running, database created, `psql` connectivity. |
+| **401 / login issues** | `JWT_SECRET` set and stable; token stored after login; clock skew minimal on JWT expiry if you customize it. |
+| **CORS in production** | `CLIENT_ORIGIN` must match the deployed SPA origin. |
+| **`uuid_generate_v4()` errors** | Ensure extension `uuid-ossp` is available; `schema.sql` enables it where appropriate. Superuser may need to run `CREATE EXTENSION IF NOT EXISTS "uuid-ossp";` once. |
+
+---
+
+## License and contributions
+
+This project is maintained as a private application repository. For internal or partner use, follow your organization’s policies for secrets, `.env` files, and production deployment.
+
+If you extend the API or database, keep `schema.sql` (or a migrations folder, if you introduce one) in sync with production so new environments remain reproducible.
